@@ -1,6 +1,8 @@
 package Bai3;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class RunMain {
@@ -58,15 +60,21 @@ public class RunMain {
     }
 
     public static void Sort(Classroom cr) {
-        for (int i = 0; i < cr.getX().size()-1; i++) {
-            for (int j = i + 1; j < cr.getX().size(); j++) {
-                if (cr.getX().get(i).getCourse() > cr.getX().get(j).getCourse()) {
-                    Student temp = cr.getX().get(i);
-                    cr.getX().set(i, cr.getX().get(j));
-                    cr.getX().set(j, temp);
-                }
+//        for (int i = 0; i < cr.getX().size()-1; i++) {
+//            for (int j = i + 1; j < cr.getX().size(); j++) {
+//                if (cr.getX().get(i).getCourse() > cr.getX().get(j).getCourse()) {
+//                    Student temp = cr.getX().get(i);
+//                    cr.getX().set(i, cr.getX().get(j));
+//                    cr.getX().set(j, temp);
+//                }
+//            }
+//        }
+        Collections.sort(cr.getX(), new Comparator<Student>() {
+            @Override
+            public int compare(Student o1, Student o2) {
+                return o1.getCourse() < o2.getCourse() ? -1 : 1;
             }
-        }
+        });
         Output(cr);
     }
 
