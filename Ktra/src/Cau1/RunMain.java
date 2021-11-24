@@ -10,12 +10,12 @@ public class RunMain {
         String str = scanner.nextLine();
         int count = 0;
         int sum = 0;
-        ArrayList<Integer> number = new ArrayList<>();
+        ArrayList<Integer> numbers = new ArrayList<>();
         for (int i = 0; i < str.length(); i++) {
             if(Character.isDigit(str.charAt(i))) {
                 count++;
                 sum += Integer.parseInt(String.valueOf(str.charAt(i)));
-                number.add(Integer.parseInt(String.valueOf(str.charAt(i))));
+                numbers.add(Integer.parseInt(String.valueOf(str.charAt(i))));
             }
         }
         System.out.println("Có "+count+" ký tự số");
@@ -24,9 +24,9 @@ public class RunMain {
         } else {
             int product = 1;
             int subCount = 0;
-            for (int i = 0; i < number.size(); i++) {
-                if(sum % number.get(i) == 0) {
-                    product *= number.get(i);
+            for (int i = 0; i < numbers.size(); i++) {
+                if(sum % numbers.get(i) == 0) {
+                    product *= numbers.get(i);
                     subCount++;
                 }
             }

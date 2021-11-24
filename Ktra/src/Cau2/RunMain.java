@@ -1,6 +1,8 @@
 package Cau2;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class RunMain {
@@ -25,25 +27,26 @@ public class RunMain {
 
             switch (select) {
                 case 1:
-                    addBook(book, books);
+                    addBook(books);
                     break;
                 case 2:
-
+                    editBookByID(books);
                     break;
                 case 3:
-                    deleteBook(book,books);
+                    deleteBook(books);
                     break;
                 case 4:
-                    sortByName(book, books);
+                    sortByName(books);
                     break;
                 case 5:
-                    sortByPrice(book, books);
+                    sortByPrice(books);
                     break;
                 case 6:
-                    Show(book, books);
+                    Show(books);
                     break;
                 case 7:
                     System.out.println("Cam on ban da su dung chuong trinh!");
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Moi ban chon lai tu 1 - 8 de chay chuong trinh!");
@@ -51,7 +54,8 @@ public class RunMain {
         } while (select < 7);
     }
 
-    public static void addBook(Book book, ArrayList<Book> books) {
+    public static void addBook(ArrayList<Book> books) {
+        Book book = new Book();
         scanner.nextLine();
         System.out.print("Nhập id: ");
         book.setId(scanner.nextLine());
@@ -69,53 +73,114 @@ public class RunMain {
         books.add(book);
     }
 
-    public static void editBookByID(Book book, ArrayList<Book> books) {
-
-    }
-
-    public static void deleteBook(Book book, ArrayList<Book> books) {
-        String id;
-        System.out.print("Nhập id muốn xóa: ");
-        id = scanner.nextLine();
-        for (int i = 0; i < books.size(); i++) {
-            if (books.get(i).getId() == id) {
-                books.remove(i);
-            }
-        }
-    }
-
-    public static void sortByName(Book book, ArrayList<Book> books) {
-        for (int i = 0; i < books.size()-1; i++) {
-            for (int j = i+1; j < books.size() ; j++) {
-                if (books.get(i).getName().compareToIgnoreCase(books.get(j).getName()) > 0) {
-                    Book temp = books.get(i);
-                        books.set(i , books.get(j));
-                        books.set(j, temp);
+    public static void editBookByID(ArrayList<Book> books) {
+        scanner.nextLine();
+        if (books.size() == 0) {
+            System.out.println("Không có thông tin cuốn sách nào vui lòng nhập thêm sách!");
+        } else {
+            System.out.print("Nhập id bạn muốn sửa: ");
+            String id = scanner.nextLine();
+            for (int i = 0; i < books.size(); i++) {
+                if(books.get(i).getId().compareTo(id) == 0) {
+                    System.out.print("Các thuộc tính:\n" +
+                            "1. ID\n" +
+                            "2. Name\n" +
+                            "3. Publisher\n" +
+                            "4. Price\n" +
+                            "5. numberOfPage\n" +
+                            "6. author\n" +
+                            "Nhập thuộc tính bạn muốn thay đổi: ");
+                    int subSelect = scanner.nextInt();
+                    scanner.nextLine();
+                    switch (subSelect) {
+                        case 1:
+                            System.out.print("Nhập ID: ");
+                            books.get(i).setId(scanner.nextLine());
+                            break;
+                        case 2:
+                            System.out.print("Nhập tên sách: ");
+                            books.get(i).setName(scanner.nextLine());
+                            break;
+                        case 3:
+                            System.out.print("Nhập nhà sản xuất: ");
+                            books.get(i).setPublisher(scanner.nextLine());
+                            break;
+                        case 4:
+                            System.out.print("Nhập giá: ");
+                            books.get(i).setPrice(scanner.nextDouble());
+                            scanner.nextLine();
+                            break;
+                        case 5:
+                            System.out.print("Nhập số trang: ");
+                            books.get(i).setNumberOfPage(scanner.nextInt());
+                            scanner.nextLine();
+                            break;
+                        case 6:
+                            System.out.print("Nhập tên tác giả: ");
+                            books.get(i).setAuthor(scanner.nextLine());
+                            break;
+                    }
                 }
             }
         }
     }
 
-    public static void sortByPrice(Book book, ArrayList<Book> books) {
-        for (int i = 0; i < books.size()-1; i++) {
-            for (int j = i+1; j < books.size() ; j++) {
-                if (books.get(i).getPrice() < books.get(j).getPrice()) {
-                    Book temp = books.get(i);
-                        books.set(i , books.get(j));
-                        books.set(j, temp);
+    public static void deleteBook(ArrayList<Book> books) {
+        scanner.nextLine();
+        if (books.size() == 0) {
+            System.out.println("Không có thông tin cuốn sách nào vui lòng nhập thêm sách!");
+        } else {
+            String id;
+            System.out.print("Nhập id muốn xóa: ");
+            id = scanner.nextLine();
+            for (int i = 0; i < books.size(); i++) {
+                if (books.get(i).getId().compareTo(id) == 0) {
+                    books.remove(i);
                 }
             }
         }
     }
 
-    public static void Show(Book book, ArrayList<Book> books) {
-        for (int i = 0; i < books.size(); i++) {
-            System.out.println("ID: " + books.get(i).getId());
-            System.out.println("Tên sách: " + books.get(i).getName());
-            System.out.println("NSX: " + books.get(i).getPublisher());
-            System.out.println("Giá: " + books.get(i).getPrice());
-            System.out.println("Số trang: " + books.get(i).getNumberOfPage());
-            System.out.println("Tác giả: " + books.get(i).getAuthor());
+    public static void sortByName(ArrayList<Book> books) {
+        if (books.size() == 0) {
+            System.out.println("Không có thông tin cuốn sách nào vui lòng nhập thêm sách!");
+        } else {
+            for (int i = 0; i < books.size()-1; i++) {
+                Collections.sort(books, new Comparator<Book>() {
+                    @Override
+                    public int compare(Book o1, Book o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
+            }
+        }
+    }
+
+    public static void sortByPrice(ArrayList<Book> books) {
+        if (books.size() == 0) {
+            System.out.println("Không có thông tin cuốn sách nào vui lòng nhập thêm sách!");
+        } else {
+            Collections.sort(books, new Comparator<Book>() {
+                @Override
+                public int compare(Book o1, Book o2) {
+                    return o1.getPrice() > o2.getPrice() ? -1 : 1;
+                }
+            });
+        }
+    }
+
+    public static void Show(ArrayList<Book> books) {
+        if (books.size() == 0) {
+            System.out.println("Không có thông tin cuốn sách nào vui lòng nhập thêm sách!");
+        } else {
+            System.out.println("\n===========THONG TIN SACH=============\n");
+            System.out.printf(
+                    "%-15s %-20s %-20s %-15s %-15s %-20s\n",
+                    "ID", "Tên sách", "Nhà xuất bản", "Giá sách", "Số trang", "Tác giả"
+            );
+            books.forEach(ele -> System.out.printf("%-15s %-20s %-20s %-15f %-15d %-20s\n",
+                    ele.getId(), ele.getName(), ele.getPublisher(), ele.getPrice(), ele.getNumberOfPage(), ele.getAuthor()
+            ));
         }
     }
 }
