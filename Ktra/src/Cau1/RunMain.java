@@ -8,24 +8,22 @@ public class RunMain {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Nhập chuỗi: ");
         String str = scanner.nextLine();
-        int count = 0;
         int sum = 0;
         ArrayList<Integer> numbers = new ArrayList<>();
         for (int i = 0; i < str.length(); i++) {
             if(Character.isDigit(str.charAt(i))) {
-                count++;
                 sum += Integer.parseInt(String.valueOf(str.charAt(i)));
                 numbers.add(Integer.parseInt(String.valueOf(str.charAt(i))));
             }
         }
-        System.out.println("Có "+count+" ký tự số");
-        if(count == 0) {
+        System.out.println("Có "+numbers.size()+" ký tự số");
+        if(numbers.size() == 0) {
             System.out.println("Không có ký tự số nào để tính tích các ước của tổng các chữ số");
         } else {
             int product = 1;
             int subCount = 0;
             for (int i = 0; i < numbers.size(); i++) {
-                if(sum % numbers.get(i) == 0) {
+                if(numbers.get(i) != 0 && sum % numbers.get(i) == 0) {
                     product *= numbers.get(i);
                     subCount++;
                 }
